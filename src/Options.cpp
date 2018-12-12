@@ -6,7 +6,7 @@
 
 Options* Options::inst = nullptr;
 
-Options* Options::instance(uint8_t pre, std::string auth) {
+Options* Options::instance(std::string auth, uint8_t pre) {
     if (inst == nullptr){
         inst = new Options(pre, auth);
     }

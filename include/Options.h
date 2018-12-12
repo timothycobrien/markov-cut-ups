@@ -21,7 +21,7 @@ public:
      //Creates instance if not present
      //returns instance
      //default parameters of prefix size 2, and using all authors in texts directory
-    static Options* instance(uint8_t = 2, std::string = "all");
+    static Options* instance(std::string = "all", uint8_t = 2,);
 
 
      //Default  destructor, preserves options through entire program execution

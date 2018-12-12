@@ -18,18 +18,23 @@ std::mt19937 Dictionary::engineHelper() {
 
 
 Dictionary::Dictionary(std::string auth):author(auth) {
-
+    create();
 }
 
 std::string Dictionary::generateText(uint32_t length) {
     std::string prefix = prefixInitializer(Options::instance()->prefixSize());
     std::string suffix;
     std::string output("");
-    output.reserve(length);
+    //probably has some runtime optimization, not entirely sure
     for (uint32_t count = 0; count < length; ++count){
         suffix = suffixSelect(prefix);
         if (suffix[0] == nonWord){
-
+            output.append("\n\n"); //just two newlines to simulate new text thread
+            prefix = prefixInitializer(Options::instance()->prefixSize());
+        }
+        else{
+            output.append(suffix + " ");
+            prefix = prefix.substr(prefix.find(' ') + 1) + ' ' + suffix;
         }
     }
     return output;
@@ -73,6 +78,8 @@ std::string Dictionary::suffixSelect(const std::string &prefix) {
     }
     else{
         std::uniform_int_distribution<> range(0, search.size() - 1);
-        return search[range(gen)];
+        int lookup = range(gen);
+        std::cout << lookup << std::endl;
+        return search[lookup];
     }
 }
