@@ -7,6 +7,15 @@
 #include <fstream>
 #include <iostream>
 
+std::mt19937 Dictionary::gen = Dictionary::engineHelper();
+
+std::mt19937 Dictionary::engineHelper() {
+    std::random_device rd;
+    std::mt19937 temp(rd);
+    temp.discard(700000);
+    return temp;
+}
+
 
 Dictionary::Dictionary(std::string auth):author(auth) {
 
@@ -14,9 +23,14 @@ Dictionary::Dictionary(std::string auth):author(auth) {
 
 std::string Dictionary::generateText(uint32_t length) {
     std::string prefix = prefixInitializer(Options::instance()->prefixSize());
+    std::string suffix;
     std::string output("");
+    output.reserve(length);
     for (uint32_t count = 0; count < length; ++count){
+        suffix = suffixSelect(prefix);
+        if (suffix[0] == nonWord){
 
+        }
     }
     return output;
 }
@@ -53,5 +67,12 @@ std::string Dictionary::prefixInitializer(uint32_t size){
 }
 
 std::string Dictionary::suffixSelect(const std::string &prefix) {
-
+    auto search = dictionary.at(prefix); //already throws if nonexistent
+    if (search.size() == 1){ //runtime optimization
+        return search[0];
+    }
+    else{
+        std::uniform_int_distribution<> range(0, search.size() - 1);
+        return search[range(gen)];
+    }
 }

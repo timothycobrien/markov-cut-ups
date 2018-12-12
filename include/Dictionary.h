@@ -9,6 +9,7 @@
 #include <vector>
 #include <string>
 #include <filesystem>
+#include <random>
 
 #ifndef MARKOV_CUT_UPS_DICTIONARY_H
 #define MARKOV_CUT_UPS_DICTIONARY_H
@@ -16,6 +17,7 @@
 class Dictionary{
 
 public:
+
     //takes string of author's works to create dictionary for
     Dictionary(std::string auth);
 
@@ -35,7 +37,14 @@ private:
     std::string prefixInitializer(uint32_t size);
     //randomly selects a particular entry from the vector
     //optimized if there is only one entry in the vector
+    //assumes that entry is in vector (throws if it isn't)
     std::string suffixSelect(const std::string &prefix);
+
+    //following are for random number generation
+    static std::mt19937 gen;
+    static std::mt19937 engineHelper();
+
+
 
 
 };
