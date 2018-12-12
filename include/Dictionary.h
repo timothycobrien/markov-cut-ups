@@ -30,6 +30,12 @@ private:
     void create();
     //adds a specific text to the dictionary, intended to be used in larger loop
     void addText(const std::filesystem::path &filename);
+    //creates a nonword prefix string (nonword is the '|' character in this case)
+    //passed size to encapsulate method logic slightly better
+    std::string prefixInitializer(uint32_t size);
+    //randomly selects a particular entry from the vector
+    //optimized if there is only one entry in the vector
+    std::string suffixSelect(const std::string &prefix);
 
 
 };

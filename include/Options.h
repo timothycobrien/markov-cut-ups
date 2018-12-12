@@ -12,6 +12,8 @@
 #ifndef MARKOV_CUT_UPS_OPTIONS_H
 #define MARKOV_CUT_UPS_OPTIONS_H
 
+const char nonWord = '|';
+
 class Options{
 
 public:
