@@ -10,7 +10,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Werror -Wextra -pedantic -pedanti
 include_directories("./include")
 set(SOURCE_FILES
     ./src/Options.cpp
-)
+        src/Dictionary.cpp include/Dictionary.h)
 
 # Make the project root directory the working directory when we run
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bin)

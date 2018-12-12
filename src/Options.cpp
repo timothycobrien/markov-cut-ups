@@ -2,6 +2,7 @@
 // Created by Tim on 12/11/2018.
 //
 #include "Options.h"
+#include <filesystem>
 
 Options* Options::inst = nullptr;
 
@@ -21,4 +22,10 @@ std::string Options::authors() {
 }
 
 Options::Options(uint8_t pre, std::string auth):preSize(pre), authorList(auth) {
+    if (auth == "all"){
+        auto directory = std::filesystem::directory_iterator("../texts");
+        for (auto name : directory){
+
+        }
+    }
 }
