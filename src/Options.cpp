@@ -3,6 +3,9 @@
 //
 #include "Options.h"
 #include <filesystem>
+#include <sstream>
+#include <iostream>
+
 
 Options* Options::inst = nullptr;
 
@@ -23,9 +26,13 @@ std::string Options::authors() {
 
 Options::Options(uint8_t pre, std::string auth):preSize(pre), authorList(auth) {
     if (auth == "all"){
-        auto directory = std::filesystem::directory_iterator("../texts");
-        for (auto name : directory){
-
+        std::string path = "../texts";
+        auto directory = std::filesystem::directory_iterator(path);
+        std::ostringstream out;
+        for (const auto &name : directory){
+            out << name.path() << " ";
         }
+        std::cout << out.str() << std::endl;
+        authorList = out.str();
     }
 }

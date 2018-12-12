@@ -11,7 +11,7 @@ std::mt19937 Dictionary::gen = Dictionary::engineHelper();
 
 std::mt19937 Dictionary::engineHelper() {
     std::random_device rd;
-    std::mt19937 temp(rd);
+    std::mt19937 temp(rd());
     temp.discard(700000);
     return temp;
 }
@@ -59,7 +59,7 @@ void Dictionary::addText(const std::filesystem::path &filename) {
         //looks for space, reappends with space
     }
     //need to fix last prefix with nonword
-    dictionary[prefix].emplace_back(nonWord);
+    dictionary[prefix].emplace_back(1, nonWord);
 }
 
 std::string Dictionary::prefixInitializer(uint32_t size){
