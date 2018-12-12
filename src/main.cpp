@@ -64,8 +64,8 @@ std::unique_ptr<Options> parseArgs(int argc, char* argv[]){
                 return options;
             }
         }
-        else{
-            std::string param = concatArgs(argc, argv);
+        else{ //prefix size parameter was given
+            std::string param = concatArgs((argc - 1), (argv + 1));
             std::unique_ptr<Options> options(Options::instance(param, preNum));
             return options;
         }

@@ -9,30 +9,20 @@
 
 Options* Options::inst = nullptr;
 
-Options* Options::instance(std::string auth, uint8_t pre) {
+Options* Options::instance(std::vector<std::string>& auth, uint8_t pre) {
     if (inst == nullptr){
-        inst = new Options(pre, auth);
+        inst = new Options(auth, pre);
     }
     return inst;
 }
 
-uint8_t Options::prefixSize() {
+uint8_t Options::prefixSize() const{
     return preSize;
 }
 
-std::string Options::authors() {
+const std::vector<std::string>& Options::authors() const{
     return authorList;
 }
 
-Options::Options(uint8_t pre, std::string auth):preSize(pre), authorList(auth) {
-    if (auth == "all"){
-        std::string path = "../texts";
-        auto directory = std::filesystem::directory_iterator(path);
-        std::ostringstream out;
-        for (const auto &name : directory){
-            out << name.path() << " ";
-        }
-        std::cout << out.str() << std::endl;
-        authorList = out.str();
-    }
+Options::Options(std::vector<std::string>& auth, uint8_t pre): authorList(auth), preSize(pre) {
 }

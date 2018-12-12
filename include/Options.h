@@ -8,6 +8,7 @@
 
 #include <cstdint>
 #include <string>
+#include <vector>
 
 #ifndef MARKOV_CUT_UPS_OPTIONS_H
 #define MARKOV_CUT_UPS_OPTIONS_H
@@ -21,28 +22,29 @@ public:
      //Creates instance if not present
      //returns instance
      //default parameters of prefix size 2, and using all authors in texts directory
-    static Options* instance(std::string = "all", uint8_t = 2);
+    static Options* instance(std::vector<std::string>&, uint8_t = 2);
 
 
      //Default  destructor, preserves options through entire program execution
      ~Options() = default;
 
      //Returns prefix size
-     uint8_t prefixSize();
+     uint8_t prefixSize() const;
 
      //Returns author list
-     std::string authors();
+     const std::vector<std::string>& authors() const;
 
 private:
     //Private constructor for singleton
-    Options(uint8_t, std::string);
+    Options(std::vector<std::string>&, uint8_t);
+
+    //List of authors, assumes each author represented by separate folder in ../texts
+    std::vector<std::string> authorList;
 
     //Prefix size will be capped at 4? for now, otherwise should be weird
     //So will just make this variable 1 byte in memory
     uint8_t preSize;
 
-    //List of authors, assumes each author represented by separate folder in ../texts
-    std::string authorList;
 
     //Pointer to singleton
     static Options* inst;

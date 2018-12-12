@@ -24,6 +24,9 @@ public:
     //generates text of a certain length
     std::string generateText(uint32_t);
 
+    //for random number generation
+    static std::mt19937 gen;
+
 private:
     std::unordered_map<std::string, std::vector<std::string>> dictionary;
     //author to generate dictionary from
@@ -41,7 +44,7 @@ private:
     std::string suffixSelect(const std::string &prefix);
 
     //following are for random number generation
-    static std::mt19937 gen;
+
     static std::mt19937 engineHelper();
 
 
