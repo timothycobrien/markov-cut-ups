@@ -18,7 +18,7 @@ class Dictionary{
 
 public:
 
-    //takes string of author's works to create dictionary for
+    //takes author to create dictionary for
     Dictionary(std::string auth);
 
     //generates text of a certain length

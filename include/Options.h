@@ -19,14 +19,21 @@ class Options{
 
 public:
 
+    //Can't create instance, used only for accessing
+    static Options* instance();
+
      //Creates instance if not present
      //returns instance
      //default parameters of prefix size 2, and using all authors in texts directory
-    static Options* instance(std::vector<std::string>&, uint8_t = 2);
+     //Output size parameter needs to be provided
+    static Options* instance(uint32_t, std::vector<std::string>&, uint8_t = 2);
 
 
      //Default  destructor, preserves options through entire program execution
      ~Options() = default;
+
+     //Returns number of words in each output file
+     uint32_t outputSize() const;
 
      //Returns prefix size
      uint8_t prefixSize() const;
@@ -36,7 +43,10 @@ public:
 
 private:
     //Private constructor for singleton
-    Options(std::vector<std::string>&, uint8_t);
+    Options(uint32_t, std::vector<std::string>&, uint8_t);
+
+    //number of words in each output file
+    uint32_t outSize;
 
     //List of authors, assumes each author represented by separate folder in ../texts
     std::vector<std::string> authorList;

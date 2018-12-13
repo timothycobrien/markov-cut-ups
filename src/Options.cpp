@@ -9,11 +9,24 @@
 
 Options* Options::inst = nullptr;
 
-Options* Options::instance(std::vector<std::string>& auth, uint8_t pre) {
+Options* Options::instance() {
     if (inst == nullptr){
-        inst = new Options(auth, pre);
+        throw std::invalid_argument("Need parameters to create singleton.");
+    }
+    else{
+        return inst;
+    }
+}
+
+Options* Options::instance(uint32_t outSize, std::vector<std::string>& auth, uint8_t pre) {
+    if (inst == nullptr){
+        inst = new Options(outSize, auth, pre);
     }
     return inst;
+}
+
+uint32_t Options::outputSize() const {
+    return outSize;
 }
 
 uint8_t Options::prefixSize() const{
@@ -24,5 +37,5 @@ const std::vector<std::string>& Options::authors() const{
     return authorList;
 }
 
-Options::Options(std::vector<std::string>& auth, uint8_t pre): authorList(auth), preSize(pre) {
+Options::Options(uint32_t out, std::vector<std::string>& auth, uint8_t pre):outSize(out), authorList(auth), preSize(pre) {
 }

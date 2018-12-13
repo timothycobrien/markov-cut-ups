@@ -5,13 +5,19 @@
 #include "Dictionary.h"
 #include "Options.h"
 #include <fstream>
+#include <chrono>
 #include <iostream>
 
 std::mt19937 Dictionary::gen = Dictionary::engineHelper();
 
+/**
+ * Credit to: https://www.guyrutenberg.com/2014/05/03/c-mt19937-example/
+ * and https://codereview.stackexchange.com/questions/109260/seed-stdmt19937-from-stdrandom-device
+ * @return Random Engine
+ */
 std::mt19937 Dictionary::engineHelper() {
-    std::random_device rd;
-    std::mt19937 temp(rd());
+    auto seed = std::chrono::high_resolution_clock::now().time_since_epoch().count();
+    std::mt19937 temp(seed);
     temp.discard(700000);
     return temp;
 }
@@ -21,11 +27,10 @@ Dictionary::Dictionary(std::string auth):author(auth) {
     create();
 }
 
-std::string Dictionary::generateText(uint32_t length) {
+std::string Dictionary::generateText(uint32_t length){
     std::string prefix = prefixInitializer(Options::instance()->prefixSize());
     std::string suffix;
     std::string output("");
-    //probably has some runtime optimization, not entirely sure
     for (uint32_t count = 0; count < length; ++count){
         suffix = suffixSelect(prefix);
         if (suffix[0] == nonWord){
@@ -42,9 +47,8 @@ std::string Dictionary::generateText(uint32_t length) {
 
 void Dictionary::create() {
     std::string path = "../texts/"+author;
-    auto directory = std::filesystem::path(path);
+    auto directory = std::filesystem::directory_iterator(path);
     for (auto const &file : directory){
-        std::cout << file << std::endl;
         addText(file);
     }
 }
@@ -79,7 +83,6 @@ std::string Dictionary::suffixSelect(const std::string &prefix) {
     else{
         std::uniform_int_distribution<> range(0, search.size() - 1);
         int lookup = range(gen);
-        std::cout << lookup << std::endl;
         return search[lookup];
     }
 }
