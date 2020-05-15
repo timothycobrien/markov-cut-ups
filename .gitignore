@@ -1,4 +1,8 @@
 .idea/*
 bin/
 cmake-build-debug/
-texts/
+texts
+CMakeCache.txt
+CMakeFiles
+MakeFile
+*.cmake

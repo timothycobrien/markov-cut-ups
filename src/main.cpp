@@ -5,6 +5,7 @@
 #include "Dictionary.h"
 #include "Options.h"
 #include <stdexcept>
+#include <algorithm>
 #include <cstring>
 #include <string>
 #include <vector>
